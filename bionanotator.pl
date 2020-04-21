@@ -87,7 +87,7 @@ open(OU,$outfile_found)|| die "$!\ncould not open annovar outfile in run_$sample
 my@all_out_lines=<OU>;
 
 my$line_count=0;
-my$new_header_line="Chr	Start	End	Ref	Alt	Func.refGene\tGene.refGene\tCancer.hallmark	GeneDetail.refGene	ExonicFunc.refGene	AAChange.refGene	cytoBand	dgvMerged	gwasCatalog	wgEncodeRegDnaseClustered	genomicSuperDups	wgRna\n";
+my$new_header_line="Chr	Start	End	Ref	Alt	Func.refGene\tGene.refGene\tCancer.hallmark	GeneDetail.refGene	cytoBand	dgvMerged	gwasCatalog	wgEncodeRegDnaseClustered	genomicSuperDups	wgRna\n";
 print FIN "$new_header_line"; # print the header into final output file
 my$hallm="none";
 foreach my $outline(@all_out_lines){
@@ -115,7 +115,7 @@ foreach my $outline(@all_out_lines){
 
     # all other file lines
     # split by column
-    my$new_line="$all_line_parts[0]\t$all_line_parts[1]\t$all_line_parts[2]\t$all_line_parts[3]\t$all_line_parts[4]\t$all_line_parts[5]\t$all_line_parts[6]\t$hallm\t$all_line_parts[7]\t$all_line_parts[8]\t$all_line_parts[9]\t$all_line_parts[10]\t$all_line_parts[11]\t$all_line_parts[12]\t$all_line_parts[13]\t$all_line_parts[14]\t$all_line_parts[15]\n";
+    my$new_line="$all_line_parts[0]\t$all_line_parts[1]\t$all_line_parts[2]\t$all_line_parts[3]\t$all_line_parts[4]\t$all_line_parts[5]\t$all_line_parts[6]\t$hallm\t$all_line_parts[7]\t$all_line_parts[8]\t$all_line_parts[11]\t$all_line_parts[12]\t$all_line_parts[13]\t$all_line_parts[14]\t$all_line_parts[15]\n";
     # cleanup
     $new_line=~s/\t\s+/\t/g;
     print FIN $new_line;

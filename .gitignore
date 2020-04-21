@@ -1,2 +1,8 @@
 /run_testsample/
 run_testsample
+run_testrun2
+/run_testrun2/
+run_test*
+run_
+logfile
+logfile.log
