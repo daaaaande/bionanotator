@@ -89,7 +89,7 @@ my@all_out_lines=<OU>;
 my$line_count=0;
 my$new_header_line="Chr	Start	End	Ref	Alt	Func.refGene\tGene.refGene\tCancer.hallmark	GeneDetail.refGene	cytoBand	dgvMerged	gwasCatalog	wgEncodeRegDnaseClustered	genomicSuperDups	wgRna\n";
 print FIN "$new_header_line"; # print the header into final output file
-my$hallm="none";
+my$hallm="";
 foreach my $outline(@all_out_lines){
   $line_count=$line_count +1;
   chomp $outline;
@@ -102,13 +102,14 @@ foreach my $outline(@all_out_lines){
     # find cancer hallmarks in gene names
 
     my@genes_all=split(/\;/,$all_line_parts[6]);# find each gene
-    $hallm="none";
+    $hallm="";
     foreach my $single_gene(@genes_all){
       # check hash for fitting hits
       $single_gene=~s/\"//g;
       if(grep(/$single_gene?/,@allehallmarkg)){
         if($mapping_hash{$single_gene}=~/[A-Z]/){
-        $hallm=$mapping_hash{$single_gene};# one hallmark max per SV for now
+        my$hallm_neu=$mapping_hash{$single_gene};# one hallmark max per SV for now
+        $hallm="$hallm.$hallm_neu";# collecting all hallmarks
         }
       }
     }
