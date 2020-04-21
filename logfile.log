@@ -1,0 +1,2 @@
+# example run :
+daric@Whale:~/work_enclave/bionano/annovar/bionanotator$ perl bionanotator.pl --i ../bionano_out_new.vcf --del 0 --sample testrun_5
