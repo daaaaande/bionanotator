@@ -1,3 +1,3 @@
-# bionanotator - annotate bionano .vcf with annovar and more 
+# bionanotator - annotate bionano .vcf with annovar and more
 
-### built for use un Linux 
+### built for use on Linux
