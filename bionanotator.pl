@@ -64,7 +64,7 @@ print ER "now in run_$sample/.\n";
 # create rundir
 # go to rundir
 # execute annovar - maybe place and DB place as param?
-my$annovar_ex=`perl ../../table_annovar.pl  ../$infile ../../humanhg38/ -buildver hg38 -out $sample.annotated -polish -protocol refGene,cytoBand,dgvMerged,gwasCatalog,wgEncodeRegDnaseClustered,genomicSuperDups,wgRna,gnomad30_genome -operation gx,r,r,r,r,r,r,f -nastring . >$logfile`;
+my$annovar_ex=`perl ../../table_annovar.pl  ../$infile ../../humanhg38/ -buildver hg38 -out $sample.annotated -polish -protocol refGene,cytoBand,dgvMerged,gwasCatalog,wgEncodeRegDnaseClustered,genomicSuperDups,wgRna -operation gx,r,r,r,r,r,r -nastring . >$logfile`;
 print ER "executed annovar: $annovar_ex\n";
 
 
