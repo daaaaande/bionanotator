@@ -1,13 +1,23 @@
 # bionanotator - annotate bionano .vcf with annovar and more
+### what it does
+- annotates with annovar for included databases (hg38, table_annovar)
+- scans included genes for cancer hallmark genes + leukemia predisposition genes
+- uses bedtools to count the overlapping regions in the dvg_merged database with at least 30% overlap (query vs db match  AND db match vs query)
+- if allele frequencies are found, it leaves the data in the output file. if all allele frequencies columns are empty , these will be removed
+- summarizes results in one .tsv file (samplename_annotates_w_h.tsv)
 
-### built for use on Linux
+>>  built for use on Linux
+
 ### requirements
 - annovar installation with all needed hg38 databases:
 - place of table_annovar.pl  in ../../ of bionanotator.pl
-- hg38 annovar databases in ../../humanhg38:  refGene,cytoBand,dgvMerged,gwasCatalog,wgEncodeRegDnaseClustered,genomicSuperDups,wgRna,gnomad30_genome
+- hg38 annovar databases in ../../humanhg38:  refGene,cytoBand,dgvMerged,gwasCatalog,wgEncodeRegDnaseClustered,genomicSuperDups,wgRna
+- for the hit counts to work, remove first column from dgv_merged.txt annovar database file to turn it into a valid .bed file: ../../humanhg38/dgv_merged_bedfile.bed
+ ( can be done with `cat dgv_merged.txt | cut -f 2- > dgv_merged_bedfile.bed`)
 
+- bedtools intersect installed
 # HOWTO
-`perl bionanotator.pl --i ../bionano_out_new.vcf --del 0`
+`perl bionanotator.pl --i ../bionano_out_new.vcf --del 0 --sample sample_name`
 ### parameters
 `--in in.vcf ` (--i); input bionano .vcf file
 
@@ -32,12 +42,12 @@ test@test$ head bionano_out_new.vcf
 test@test$
 ```
 - note that there is no header, ref and alt columns are both 0
+- no chr in the beginning, just the chromosome number
 - more input is not needed
 
-### contributing
+### contribute
  Feedback is always welcome!
 
 
 ### roadmap
 - add bigwig value column
-- change empty column remover from static to flexible based on file 

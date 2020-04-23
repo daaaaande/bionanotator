@@ -171,8 +171,27 @@ elsif($full_header_line==0){
     print FIN $raw_line;
   }
 }
+close FIN;
+# cleaning up the annotated file to be a 3-column .bed- so it only will be created once annovar finished
+my$catting_part1=`cat $sample.annotated.tsv | cut -f -3 | sed 's/^/chr/' | tail -n +2 >bedfile.$sample.annotated.bed`;
+print ER "done preparing annotated file :$catting_part1\n";
 
+# now use bedtools to count overlapping dgv entries
+my$bedtools_out=`bedtools intersect -a bedfile.$sample.annotated.bed -b ../../humanhg38/dgv_merged_bedfile.bed -f 0.3 -F 0.3 -c >dgv_hitcounts.$sample.annotated.tsv`;
 
+# TODO: get the column of the hitcounts into a final outfile + append header name
+my$all_hits=`cat dgv_hitcounts.$sample.annotated.tsv | cut -f 4 | sed -e '1i numhits_dvg ' >hits_$sample.annotated.bed`;
 
-print "done creating $sample.annotated.tsv.\n";
+my$complete_file=`paste $sample.annotated.tsv hits_$sample.annotated.bed >$sample.annotated.w_h.tsv`;
+
+print ER "errors bedtools execution:$bedtools_out\nerrors cutting the bedtools outfile:$all_hits \nerrors pasting the complete outfile:$complete_file\n";
+
+# TODO: ad bedtools intersect command with file preparation:
+#cat testrun_11.annotated.tsv | cut -f -3 >testrun11_annotated_bedfile.bed # remove everything except .bed columns
+#sed -e  's/^/chr/' testrun11_annotated_bedfile.bed >prepared_bed_testrun11.bed # attach chr at each line start
+#tail -n +2 prepared_bed_testrun11.bed >headless_bed_testrun11.bed  # remove header
+#bedtools intersect -a headless_bed_testrun11.bed -b ../../humanhg38/dgv_merged_bedfile.bed >all_overlaps_testrun11_filter05_plus_03_03_wa_count_overlaps.tsv -f 0.3 -F 0.3 -c
+
+# then re-introduce these counts into a new file with count_overlap_30 in header
+print "done creating $sample.annotated.tsv. and $sample.annotated.w_h.tsv\n";
 1;
