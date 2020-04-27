@@ -1,4 +1,4 @@
-# bionanotator - annotate bionano .vcf with annovar and more
+# bionanotator - annotate bionano .csv with annovar and more
 ### what it does
 - takes the raw bionano output and splits it into vcf and tsv file: .vcf is used for annovar, .tsv includes useful columns later pasted into the final outfile
 - annotates with annovar for included databases (hg38, table_annovar)
@@ -35,7 +35,7 @@
 - the input file for bionanotator is a .csv
 - septarator is ";"
 - header is present
-- example : 
+- example :
 ```bash
 test@test$ head bionanotator_infile.csv
 #hSmapEntryID;QryContigID;RefcontigID1;RefcontigID2;QryStartPos;QryEndPos;RefStartPos;RefEndPos;Confidence;Type;XmapID1;XmapID2;LinkID;QryStartIdx;QryEndIdx;RefStartIdx;RefEndIdx;Zygosity;Genotype;GenotypeGroup;RawConfidence;RawConfidenceLeft;RawConfidenceRight;RawConfidenceCenter;SVsize;SVfreq;orientation;Sample;Algorithm;Size;Present_in_%_of_BNG_control_samples;Present_in_%_of_BNG_control_samples_with_the_same_enzyme;Fail_assembly_chimeric_score;OverlapGenes;NearestNonOverlapGene;NearestNonOverlapGeneDistance;PutativeGeneFusion;Found_in_parents_assemblies;Found_in_parents_molecules;Found_in_self_molecules;Mother_molecule_count;Father_molecule_count;Self_molecule_count
