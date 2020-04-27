@@ -3,7 +3,7 @@
 - takes the raw bionano output and splits it into vcf and tsv file: .vcf is used for annovar, .tsv includes useful columns later pasted into the final outfile
 - annotates with annovar for included databases (hg38, table_annovar)
 - scans included genes for cancer hallmark genes + leukemia predisposition genes
-- uses bedtools to count the overlapping regions in the dvg_merged database with at least 30% overlap (query vs db match  AND db match vs query)
+- uses bedtools to count the overlapping regions in the dvg_merged database with at least 50% overlap (query vs db match  AND db match vs query)
 - if allele frequencies are found, it leaves the data in the output file. if all allele frequencies columns are empty , these will be removed
 - summarizes results in one .tsv file ($sample.annotated.finished.tsv)
 
@@ -35,7 +35,7 @@
 - the input file for bionanotator is a .csv
 - septarator is ";"
 - header is present
-
+- example : 
 ```bash
 test@test$ head bionanotator_infile.csv
 #hSmapEntryID;QryContigID;RefcontigID1;RefcontigID2;QryStartPos;QryEndPos;RefStartPos;RefEndPos;Confidence;Type;XmapID1;XmapID2;LinkID;QryStartIdx;QryEndIdx;RefStartIdx;RefEndIdx;Zygosity;Genotype;GenotypeGroup;RawConfidence;RawConfidenceLeft;RawConfidenceRight;RawConfidenceCenter;SVsize;SVfreq;orientation;Sample;Algorithm;Size;Present_in_%_of_BNG_control_samples;Present_in_%_of_BNG_control_samples_with_the_same_enzyme;Fail_assembly_chimeric_score;OverlapGenes;NearestNonOverlapGene;NearestNonOverlapGeneDistance;PutativeGeneFusion;Found_in_parents_assemblies;Found_in_parents_molecules;Found_in_self_molecules;Mother_molecule_count;Father_molecule_count;Self_molecule_count

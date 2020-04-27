@@ -57,7 +57,7 @@ else{
 mkdir "run_$sample";
 print ER "created run dir run_$sample\n";
 
-my$prep_run=`perl prepare_bionano_output.pl --in $infile --vcf run_$sample/$infile.vcf --tsv run_$sample/$sample._raw_cols.tsv `;
+my$prep_run=`perl prepare_bionano_output.pl --in $infile --vcf run_$sample/$sample.vcf --tsv run_$sample/$sample._raw_cols.tsv `;
 print "prepared input: $prep_run\n";
 
 
@@ -70,7 +70,7 @@ print ER "now in run_$sample/.\n";
 # create rundir
 # go to rundir
 # execute annovar - maybe place and DB place as param?
-my$annovar_ex=`perl ../../table_annovar.pl  $infile.vcf ../../humanhg38/ -buildver hg38 -out $sample.annotated -polish -protocol refGene,cytoBand,dgvMerged,gwasCatalog,wgEncodeRegDnaseClustered,genomicSuperDups,wgRna -operation gx,r,r,r,r,r,r -nastring . >$logfile`;
+my$annovar_ex=`perl ../../table_annovar.pl  run_$sample/$sample.vcf ../../humanhg38/ -buildver hg38 -out $sample.annotated -polish -protocol refGene,cytoBand,dgvMerged,gwasCatalog,wgEncodeRegDnaseClustered,genomicSuperDups,wgRna -operation gx,r,r,r,r,r,r -nastring . >$logfile`;
 print ER "executed annovar: $annovar_ex\n";
 
 
