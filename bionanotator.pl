@@ -189,7 +189,7 @@ my$bedtools_out=`bedtools intersect -a bedfile.$sample.annotated.bed -b ../../hu
 my$all_hits=`cat dgv_hitcounts.$sample.annotated.tsv | cut -f 4 | sed -e '1i n_hits_dgv_filtered ' >hits_$sample.annotated.bed`;
 # then re-introduce these counts into a new file with count_overlap_30 in header
 
-my$complete_file=`paste $sample._raw_cols.tsv $sample.annotated.tsv hits_$sample.annotated.bed  >$sample.annotated.finished.tsv`;
+my$complete_file=`paste $sample.annotated.tsv hits_$sample.annotated.bed $sample._raw_cols.tsv >$sample.annotated.finished.tsv`;
 
 print ER "errors bedtools execution:$bedtools_out\nerrors cutting the bedtools outfile:$all_hits \nerrors pasting the complete outfile:$complete_file\n";
 
