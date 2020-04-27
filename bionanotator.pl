@@ -9,12 +9,14 @@ my$logfile="logfile.log";
 my$sample="testsample";
 # true/false params
 my$delete_empty_cols=1;
-my$delete_in_between_files=1;
+my$delete_in_between_files=0;
 
 GetOptions('in|i=s'=>\$infile,'sample|s=s'=>\$sample,'hallmark_file|h=s'=>\$hallmark_mapping_file,'delete_empty_cols|d=i'=>\$delete_empty_cols,'logfile|log=s'=>\$logfile,'delete_in_between_files|del=i'=>\$delete_in_between_files)|| warn "Using default parameters:\nin=in.vcf\ndelete_empty_cols=1\nhallmark_file=hallmark_genes.tsv!\nlogfile=logfile.log\ndelete_in_between_files=1\n";
 chomp($infile,$hallmark_mapping_file,$sample,$delete_empty_cols,$delete_in_between_files,$logfile);
 
 open(ER,'>>',$logfile)||die "$!\n logfile not found. use --log path/to/your_logfile.log\n";
+
+
 
 # hallmark mapping hash filling
 print ER "reading hallmark mapping file $hallmark_mapping_file...\n";
@@ -37,7 +39,7 @@ foreach my $mapline (@allemappings){
     }
   }
 }
-my@allehallmarkg=keys %mapping_hash;
+my@allehallmarkg=keys %mapping_hash;# to quickly check if we have a hallmark at all connected to gene in question
 my@all_hm_genes= values %mapping_hash;
 close MA;
 
@@ -55,22 +57,26 @@ else{
 mkdir "run_$sample";
 print ER "created run dir run_$sample\n";
 
+my$prep_run=`perl prepare_bionano_output.pl --in $infile --vcf run_$sample/$infile.vcf --tsv run_$sample/$sample._raw_cols.tsv `;
+print "prepared input: $prep_run\n";
+
+
+
+
 chdir "run_$sample";
 print ER "now in run_$sample/.\n";
-
-
 
 # find infile
 # create rundir
 # go to rundir
 # execute annovar - maybe place and DB place as param?
-my$annovar_ex=`perl ../../table_annovar.pl  ../$infile ../../humanhg38/ -buildver hg38 -out $sample.annotated -polish -protocol refGene,cytoBand,dgvMerged,gwasCatalog,wgEncodeRegDnaseClustered,genomicSuperDups,wgRna -operation gx,r,r,r,r,r,r -nastring . >$logfile`;
+my$annovar_ex=`perl ../../table_annovar.pl  $infile.vcf ../../humanhg38/ -buildver hg38 -out $sample.annotated -polish -protocol refGene,cytoBand,dgvMerged,gwasCatalog,wgEncodeRegDnaseClustered,genomicSuperDups,wgRna -operation gx,r,r,r,r,r,r -nastring . >$logfile`;
 print ER "executed annovar: $annovar_ex\n";
 
 
 # delete all non-txt files in run dir
 if($delete_in_between_files){
-  my$del_between_files=`find . -type f -not -name '*.txt' -print0 | xargs -0 rm --`;
+  my$del_between_files=`find . -type f -name '*.hg38*' -print0 | xargs -0 rm --`; # here only deleting some annovar in-between files
   print ER "deleted all in-between files per users request: $del_between_files\n";
 }
 else{
@@ -117,7 +123,7 @@ foreach my $outline(@all_out_lines){
       if(grep(/$single_gene?/,@allehallmarkg)){
         if($mapping_hash{$single_gene}=~/[A-Z]/){
           my$hallm_neu=$mapping_hash{$single_gene};# one hallmark max per SV for now
-          $hallm="$hallm"."+"."$hallm_neu";# collecting all hallmarks
+          $hallm="$hallm"."+"."$hallm_neu".";"."$single_gene";# collecting all hallmarks
 
         }
       }
@@ -177,21 +183,16 @@ my$catting_part1=`cat $sample.annotated.tsv | cut -f -3 | sed 's/^/chr/' | tail 
 print ER "done preparing annotated file :$catting_part1\n";
 
 # now use bedtools to count overlapping dgv entries
-my$bedtools_out=`bedtools intersect -a bedfile.$sample.annotated.bed -b ../../humanhg38/dgv_merged_bedfile.bed -f 0.3 -F 0.3 -c >dgv_hitcounts.$sample.annotated.tsv`;
+my$bedtools_out=`bedtools intersect -a bedfile.$sample.annotated.bed -b ../../humanhg38/dgv_merged_bedfile.bed -f 0.5 -F 0.5 -c >dgv_hitcounts.$sample.annotated.tsv`;
 
-# TODO: get the column of the hitcounts into a final outfile + append header name
-my$all_hits=`cat dgv_hitcounts.$sample.annotated.tsv | cut -f 4 | sed -e '1i numhits_dvg ' >hits_$sample.annotated.bed`;
+#get the column of the hitcounts into a final outfile + append header name
+my$all_hits=`cat dgv_hitcounts.$sample.annotated.tsv | cut -f 4 | sed -e '1i n_hits_dgv_filtered ' >hits_$sample.annotated.bed`;
+# then re-introduce these counts into a new file with count_overlap_30 in header
 
-my$complete_file=`paste $sample.annotated.tsv hits_$sample.annotated.bed >$sample.annotated.w_h.tsv`;
+my$complete_file=`paste $sample._raw_cols.tsv $sample.annotated.tsv hits_$sample.annotated.bed  >$sample.annotated.finished.tsv`;
 
 print ER "errors bedtools execution:$bedtools_out\nerrors cutting the bedtools outfile:$all_hits \nerrors pasting the complete outfile:$complete_file\n";
 
-# TODO: ad bedtools intersect command with file preparation:
-#cat testrun_11.annotated.tsv | cut -f -3 >testrun11_annotated_bedfile.bed # remove everything except .bed columns
-#sed -e  's/^/chr/' testrun11_annotated_bedfile.bed >prepared_bed_testrun11.bed # attach chr at each line start
-#tail -n +2 prepared_bed_testrun11.bed >headless_bed_testrun11.bed  # remove header
-#bedtools intersect -a headless_bed_testrun11.bed -b ../../humanhg38/dgv_merged_bedfile.bed >all_overlaps_testrun11_filter05_plus_03_03_wa_count_overlaps.tsv -f 0.3 -F 0.3 -c
 
-# then re-introduce these counts into a new file with count_overlap_30 in header
-print "done creating $sample.annotated.tsv. and $sample.annotated.w_h.tsv\n";
+print "done creating $sample.annotated.tsv. and $sample.annotated.finished.tsv\n";
 1;

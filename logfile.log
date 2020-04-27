@@ -1,12 +1,13 @@
 # example run :
 bionanotator$ perl bionanotator.pl --i ../bionano_out_new.vcf --del 0 --sample testrun_5
+
 reading hallmark mapping file hallmark_genes.tsv...
 found infile. creating rundir...
-created run dir run_testrun_18
-now in run_testrun_18/.
+created run dir run_testrun_26
+now in run_testrun_26/.
 executed annovar:
 set to not delete annovar in-between files.
-found annovar outfile: testrun_18.annotated.hg38_multianno.txt
+found annovar outfile: testrun_26.annotated.hg38_multianno.txt
 found  NO allele frequencies, thus excluding them ...
 done preparing annotated file :
 errors bedtools execution:
