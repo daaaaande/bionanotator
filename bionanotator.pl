@@ -70,7 +70,7 @@ print ER "now in run_$sample/.\n";
 # create rundir
 # go to rundir
 # execute annovar - maybe place and DB place as param?
-my$annovar_ex=`perl ../../table_annovar.pl  run_$sample/$sample.vcf ../../humanhg38/ -buildver hg38 -out $sample.annotated -polish -protocol refGene,cytoBand,dgvMerged,gwasCatalog,wgEncodeRegDnaseClustered,genomicSuperDups,wgRna -operation gx,r,r,r,r,r,r -nastring . >$logfile`;
+my$annovar_ex=`perl ../../table_annovar.pl  $sample.vcf ../../humanhg38/ -buildver hg38 -out $sample.annotated -polish -protocol refGene,cytoBand,dgvMerged,gwasCatalog,wgEncodeRegDnaseClustered,genomicSuperDups,wgRna -operation gx,r,r,r,r,r,r -nastring . >$logfile`;
 print ER "executed annovar: $annovar_ex\n";
 
 
@@ -99,8 +99,8 @@ my@file_lines=();
 my$full_header_line=0;
 my@lines_with_afs=();# full line with AF values
 # two possible header lines: with and without allele freqs
-my$new_header_line="Chr	Start	End	Ref	Alt	Func.refGene\tGene.refGene\tCancer.hallmark	GeneDetail.refGene	cytoBand	dgvMerged	gwasCatalog	wgEncodeRegDnaseClustered	genomicSuperDups	wgRna\n";
-my$w_af_header="Chr	Start	End	Ref	Alt	Func.refGene\tGene.refGene\tCancer.hallmark	GeneDetail.refGene	cytoBand	dgvMerged	gwasCatalog	wgEncodeRegDnaseClustered	genomicSuperDups	wgRna\tAF	AF_raw	AF_male	AF_female	AF_afr	AF_ami	AF_amr	AF_asj	AF_eas	AF_fin	AF_nfe	AF_oth	AF_sas\n";
+my$new_header_line="Chr	Start	End	Ref	Alt	Func.refGene\tCancer.hallmark	cytoBand	dgvMerged	gwasCatalog	wgEncodeRegDnaseClustered	genomicSuperDups\n";
+my$w_af_header="Chr	Start	End	Ref	Alt	Func.refGene\tCancer.hallmark	GeneDetail.refGene	cytoBand	dgvMerged	gwasCatalog	wgEncodeRegDnaseClustered	genomicSuperDups	wgRna\tAF	AF_raw	AF_male	AF_female	AF_afr	AF_ami	AF_amr	AF_asj	AF_eas	AF_fin	AF_nfe	AF_oth	AF_sas\n";
 
 my$hallm="";
 my$allele_freqs=""; #- attach here all allelle frequencies of the whole file- if there is more than . in there, leave it in the file
@@ -147,7 +147,7 @@ foreach my $outline(@all_out_lines){
     }
 
 
-    my$new_line="$all_line_parts[0]\t$all_line_parts[1]\t$all_line_parts[2]\t$all_line_parts[3]\t$all_line_parts[4]\t$all_line_parts[5]\t$all_line_parts[6]\t$hallm\t$all_line_parts[7]\t$all_line_parts[10]\t$all_line_parts[11]\t$all_line_parts[12]\t$all_line_parts[13]\t$all_line_parts[14]\t$all_line_parts[15]\n";
+    my$new_line="$all_line_parts[0]\t$all_line_parts[1]\t$all_line_parts[2]\t$all_line_parts[3]\t$all_line_parts[4]\t$all_line_parts[5]\t$hallm\t$all_line_parts[10]\t$all_line_parts[11]\t$all_line_parts[12]\t$all_line_parts[13]\t$all_line_parts[14]\n";
     # cleanup
     $new_line=~s/\t\s+/\t/g;
     #print FIN $new_line;
@@ -189,7 +189,7 @@ my$bedtools_out=`bedtools intersect -a bedfile.$sample.annotated.bed -b ../../hu
 my$all_hits=`cat dgv_hitcounts.$sample.annotated.tsv | cut -f 4 | sed -e '1i n_hits_dgv_filtered ' >hits_$sample.annotated.bed`;
 # then re-introduce these counts into a new file with count_overlap_30 in header
 
-my$complete_file=`paste $sample.annotated.tsv hits_$sample.annotated.bed $sample._raw_cols.tsv >$sample.annotated.finished.tsv`;
+my$complete_file=`paste $sample._raw_cols.tsv $sample.annotated.tsv hits_$sample.annotated.bed >$sample.annotated.finished.tsv`;
 
 print ER "errors bedtools execution:$bedtools_out\nerrors cutting the bedtools outfile:$all_hits \nerrors pasting the complete outfile:$complete_file\n";
 

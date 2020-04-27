@@ -47,6 +47,10 @@ foreach my $infile_line (@in_csv_file){
             # column numbers we want besides the coordinates:
                               # edited coords raw | alt chrom trans |type           |confidence|      zygocity|         SVFreq|     SVSize|        OverlapGenes|nonOverlapgene|   NonOveGenedist|found_in_parents|m_mole_found|f_mole_found|self_mole_found|
             my$full_line_things_needed="$coords_done\t$lineparts[3]\t$lineparts[9]\t$lineparts[8]\t$lineparts[17]\t$lineparts[25]\t$lineparts[29]\t$lineparts[33]\t$lineparts[34]\t$lineparts[35]\t$lineparts[37]\t$lineparts[40]\t$lineparts[41]\t$lineparts[42]\n";
+            #$full_line_things_needed=~s/\t\w/\t/;
+            $full_line_things_needed=~s/\n\s/\n/;
+            $full_line_things_needed=~s/\r//;
+            $full_line_things_needed=~s/\n.*/\n/;
             print TSV $full_line_things_needed;
 
 
