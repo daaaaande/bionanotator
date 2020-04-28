@@ -22,7 +22,7 @@ open(TSV,">",$tsv_file)|| die "could not open TSV outfile, exiting... \n";
 
 
 # print header into TSV file, vcf file does not need headers
-print TSV "coords\talt_chrom_trans\ttype\tconfidence\tzygocity\tSVFreq\tSVSize\tOverlapGenes\tnonOverlapgene\tNonOveGenedist\tfound_in_parents\tm_mole_found\tf_mole_found\tself_mole_found\n";
+print TSV "coords\talt_chrom_trans\ttype\tconfidence\tzygosity\tSVFreq\tSVSize\tOverlapGenes\tnonOverlapgene\tNonOveGenedist\tfound_in_parents\tm_mole_found\tf_mole_found\tself_mole_found\n";
 foreach my $infile_line (@in_csv_file){
       chomp $infile_line;
       if($infile_line=~/#/){
