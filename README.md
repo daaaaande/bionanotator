@@ -1,3 +1,7 @@
+
+
+[![DOI](https://zenodo.org/badge/257535671.svg)](https://zenodo.org/badge/latestdoi/257535671)
+
 # bionanotator - annotate bionano .csv with annovar and more
 ### what it does
 - takes the raw bionano output and splits it into vcf and tsv file: .vcf is used for annovar, .tsv includes useful columns later pasted into the final outfile
