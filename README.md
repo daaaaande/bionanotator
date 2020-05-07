@@ -5,6 +5,7 @@
 # bionanotator - annotate bionano .csv with annovar and more
 ### what it does
 - takes the raw bionano output and splits it into vcf and tsv file: .vcf is used for annovar, .tsv includes useful columns later pasted into the final outfile
+- detects for transversions- if start coordinate is bigger than end, it flips those to preven bedtools errors in further analysis
 - annotates with annovar for included databases (hg38, table_annovar)
 - scans included genes for cancer hallmark genes + leukemia predisposition genes
 - uses bedtools to count the overlapping regions in the dvg_merged database with at least 50% overlap (query vs db match  AND db match vs query)
@@ -14,6 +15,7 @@
 >>  built for use on Linux
 
 ### requirements
+- PERL installed : sudo apt install perl -y
 - annovar installation with all needed hg38 databases:
 - place of table_annovar.pl  in ../../ of bionanotator.pl
 - hg38 annovar databases in ../../humanhg38:  refGene,cytoBand,dgvMerged,gwasCatalog,wgEncodeRegDnaseClustered,genomicSuperDups,wgRna
@@ -22,24 +24,25 @@
 
 - bedtools intersect installed
 # HOWTO
-`perl bionanotator.pl --i ../bionano_out_new.csv --del 0 --sample sample_name`
+`perl bionanotator.pl --i ../test1_bnout_raw.csv --del 0 --sample test_name --case g `
 ### parameters
-`--in in.vcf ` (--i); input bionano .vcf file
+`--in in.csv ` (--i); input bionano .csv file, can be somatic or germline case
 
-`--hallmark_file hallmark_genes.tsv` (--h); Cancer hallmark .tsv mapping file  
+`--hallmark_file hallmark_genes.tsv` (--h); Cancer hallmark .tsv mapping file, part of this repo.
 
 `--logfile logfile.log` (--l); Logfile for current run
 
 `--sample testsample` (--s); samplename for this run
 
 `--delete_in_between_files 0 ` (--d ); [0/1] delete annovar in-betwen files when annotation is done
+`--case g `(--c ); [g/s] somatic (s) vs germline (g) case, somatic excludes parent info columns and adapts to different input file
 
 
 ### input file
 - the input file for bionanotator is a .csv
 - septarator is ";"
 - header is present
-- example :
+- example for germline case :
 ```bash
 test@test$ head bionanotator_infile.csv
 #hSmapEntryID;QryContigID;RefcontigID1;RefcontigID2;QryStartPos;QryEndPos;RefStartPos;RefEndPos;Confidence;Type;XmapID1;XmapID2;LinkID;QryStartIdx;QryEndIdx;RefStartIdx;RefEndIdx;Zygosity;Genotype;GenotypeGroup;RawConfidence;RawConfidenceLeft;RawConfidenceRight;RawConfidenceCenter;SVsize;SVfreq;orientation;Sample;Algorithm;Size;Present_in_%_of_BNG_control_samples;Present_in_%_of_BNG_control_samples_with_the_same_enzyme;Fail_assembly_chimeric_score;OverlapGenes;NearestNonOverlapGene;NearestNonOverlapGeneDistance;PutativeGeneFusion;Found_in_parents_assemblies;Found_in_parents_molecules;Found_in_self_molecules;Mother_molecule_count;Father_molecule_count;Self_molecule_count

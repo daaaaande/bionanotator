@@ -1,4 +1,7 @@
 # example run :
+perl bionanotator.pl --i ../somativ_bionano_output_raw.csv --del 0 --sample testrun_39_s --c s
+perl bionanotator.pl --i ../test1_bnout_raw.csv --del 0 --sample testrun_39_g --c g
+perl bionanotator.pl --i ../test1_bnout_raw.csv --del 0 --sample test
 bionanotator$ perl bionanotator.pl --i ../bionano_out_new.vcf --del 0 --sample testrun_5
 
 reading hallmark mapping file hallmark_genes.tsv...
@@ -12,4 +15,114 @@ found  NO allele frequencies, thus excluding them ...
 done preparing annotated file :
 errors bedtools execution:
 errors cutting the bedtools outfile:
+errors pasting the complete outfile:
+reading hallmark mapping file hallmark_genes.tsv...
+found infile. creating rundir...
+created run dir run_testrun_39_g
+now in run_testrun_39_g/.
+executed annovar:
+set to not delete annovar in-between files.
+found annovar outfile: testrun_39_g.annotated.hg38_multianno.txt
+found  NO allele frequencies, thus excluding them ...
+done preparing annotated file :
+errors bedtools execution:
+errors cutting the bedtools outfile:
+errors pasting the complete outfile:
+reading hallmark mapping file hallmark_genes.tsv...
+found infile. creating rundir...
+created run dir run_testrun_39_s
+now in run_testrun_39_s/.
+executed annovar:
+set to not delete annovar in-between files.
+found annovar outfile: testrun_39_s.annotated.hg38_multianno.txt
+found  NO allele frequencies, thus excluding them ...
+done preparing annotated file :
+errors bedtools execution:
+errors cutting the bedtools outfile:
+errors pasting the complete outfile:
+reading hallmark mapping file hallmark_genes.tsv...
+found infile. creating rundir...
+created run dir run_testrun_40_s
+now in run_testrun_40_s/.
+executed annovar: 
+set to not delete annovar in-between files.
+found annovar outfile: 
+reading hallmark mapping file hallmark_genes.tsv...
+found infile. creating rundir...
+created run dir run_testrun_41_s
+now in run_testrun_41_s/.
+executed annovar: 
+set to not delete annovar in-between files.
+found annovar outfile: 
+reading hallmark mapping file hallmark_genes.tsv...
+found infile. creating rundir...
+created run dir run_testrun_42_s
+now in run_testrun_42_s/.
+executed annovar: 
+set to not delete annovar in-between files.
+found annovar outfile: testrun_42_s.annotated.hg38_multianno.txt
+found  NO allele frequencies, thus excluding them ...
+done preparing annotated file :
+errors bedtools execution:
+errors cutting the bedtools outfile: 
+errors pasting the complete outfile:
+reading hallmark mapping file hallmark_genes.tsv...
+found infile. creating rundir...
+created run dir run_testrun_42_g
+now in run_testrun_42_g/.
+executed annovar: 
+set to not delete annovar in-between files.
+found annovar outfile: testrun_42_g.annotated.hg38_multianno.txt
+found  NO allele frequencies, thus excluding them ...
+done preparing annotated file :
+errors bedtools execution:
+errors cutting the bedtools outfile: 
+errors pasting the complete outfile:
+reading hallmark mapping file hallmark_genes.tsv...
+found infile. creating rundir...
+created run dir run_testrun_43_s
+now in run_testrun_43_s/.
+executed annovar: 
+set to not delete annovar in-between files.
+found annovar outfile: testrun_43_s.annotated.hg38_multianno.txt
+found  NO allele frequencies, thus excluding them ...
+done preparing annotated file :
+errors bedtools execution:
+errors cutting the bedtools outfile: 
+errors pasting the complete outfile:
+reading hallmark mapping file hallmark_genes.tsv...
+found infile. creating rundir...
+created run dir run_testrun_43_g
+now in run_testrun_43_g/.
+executed annovar: 
+set to not delete annovar in-between files.
+found annovar outfile: testrun_43_g.annotated.hg38_multianno.txt
+found  NO allele frequencies, thus excluding them ...
+done preparing annotated file :
+errors bedtools execution:
+errors cutting the bedtools outfile: 
+errors pasting the complete outfile:
+reading hallmark mapping file hallmark_genes.tsv...
+found infile. creating rundir...
+created run dir run_testrun_44_g
+now in run_testrun_44_g/.
+executed annovar: 
+set to not delete annovar in-between files.
+found annovar outfile: testrun_44_g.annotated.hg38_multianno.txt
+found  NO allele frequencies, thus excluding them ...
+done preparing annotated file :
+errors bedtools execution:
+errors cutting the bedtools outfile: 
+errors pasting the complete outfile:
+reading hallmark mapping file hallmark_genes.tsv...
+found infile. creating rundir...
+created run dir run_testrun_44_s
+now in run_testrun_44_s/.
+executed annovar: 
+set to not delete annovar in-between files.
+found annovar outfile: testrun_44_s.annotated.hg38_multianno.txt
+found  NO allele frequencies, thus excluding them ...
+done preparing annotated file :
+errors bedtools execution:
+errors cutting the bedtools outfile: 
 errors pasting the complete outfile:
