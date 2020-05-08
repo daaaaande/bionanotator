@@ -35,6 +35,7 @@
 `--sample testsample` (--s); samplename for this run
 
 `--delete_in_between_files 0 ` (--d ); [0/1] delete annovar in-betwen files when annotation is done
+
 `--case g `(--c ); [g/s] somatic (s) vs germline (g) case, somatic excludes parent info columns and adapts to different input file
 
 

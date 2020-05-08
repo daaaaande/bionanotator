@@ -112,7 +112,7 @@ if($case eq "s"){# somatic case, the raw infile has no parents information
                 print VCF "$chr\t$start_raw\t$end_raw\t0\t0\n";
               }
               else{
-                print "line : $infile_line\n error: could not decide for what is bigger, start or end \n";
+                print "line : $infile_line\n error: could not decide for what is bigger, start or end of SV \n";
               }
               # for the .vcf file we are done here. need to print header and attach 00 to it, then we are done with that
               # now the other tsv file: here we collect all usefulk columns and hand them later over to bionanotator.pl for final merging
@@ -129,10 +129,5 @@ if($case eq "s"){# somatic case, the raw infile has no parents information
         }
   }
 }
-
 print "splitted $infile into $vcf_file and $tsv_file\n";
 1;
-# TODO:
-#- integrate into bionaotator
-# paste into final outfile
-# check
