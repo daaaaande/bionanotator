@@ -1,4 +1,6 @@
 # example run :
+perl bionanotator.pl --i ../bionanotator_germline_infile.csv --del 0 --sample testrun_46_g --c g --include 1,3,11
+perl bionanotator.pl --i ../somativ_bionano_output_raw.csv --del 0 --sample testrun_46_s --c s  --include 1,3,11
 perl bionanotator.pl --i ../somativ_bionano_output_raw.csv --del 0 --sample testrun_39_s --c s
 perl bionanotator.pl --i ../test1_bnout_raw.csv --del 0 --sample testrun_39_g --c g
 perl bionanotator.pl --i ../test1_bnout_raw.csv --del 0 --sample test

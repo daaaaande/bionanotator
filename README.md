@@ -1,7 +1,5 @@
 
-
-[![DOI](https://zenodo.org/badge/257535671.svg)](https://zenodo.org/badge/latestdoi/257535671)
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3826506.svg)](https://doi.org/10.5281/zenodo.3826506)
 # bionanotator - annotate bionano .csv with annovar and more
 ### what it does
 - takes the raw bionano output and splits it into vcf and tsv file: .vcf is used for annovar, .tsv includes useful columns later pasted into the final outfile
@@ -21,8 +19,8 @@
 - hg38 annovar databases in ../../humanhg38:  refGene,cytoBand,dgvMerged,gwasCatalog,wgEncodeRegDnaseClustered,genomicSuperDups,wgRna
 - for the hit counts to work, remove first column from dgv_merged.txt annovar database file to turn it into a valid .bed file: ../../humanhg38/dgv_merged_bedfile.bed
  ( can be done with `cat dgv_merged.txt | cut -f 2- > dgv_merged_bedfile.bed`)
-
 - bedtools intersect installed
+
 # HOWTO
 `perl bionanotator.pl --i ../test1_bnout_raw.csv --del 0 --sample test_name --case g `
 ### parameters
@@ -37,6 +35,8 @@
 `--delete_in_between_files 0 ` (--d ); [0/1] delete annovar in-betwen files when annotation is done
 
 `--case g `(--c ); [g/s] somatic (s) vs germline (g) case, somatic excludes parent info columns and adapts to different input file
+
+`--include 1,4,5`(--i_c); add custom columns to the final output from the raw infile, can be multiple ones separated by comma . `--i_c 1,3,21` adds first, third and 21st column from the raw infile into the final annotated file.
 
 
 ### input file

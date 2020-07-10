@@ -11,10 +11,12 @@ my$sample="testsample";
 my$delete_empty_cols=1;
 my$delete_in_between_files=0;
 my$case="g";# germline, with mother/father information= "g", somatic, without father/mother information="s"
+my$include="";# columns to extra add to the output , list of numbers splitted by a ,
+
 # TODO: add case and parameter for somatic vs germline- the input columns are different in that case, maybe only for the later pasted into file.
 
-GetOptions('in|i=s'=>\$infile,'sample|s=s'=>\$sample,'hallmark_file|h=s'=>\$hallmark_mapping_file,'delete_empty_cols|d=i'=>\$delete_empty_cols,'logfile|log=s'=>\$logfile,'delete_in_between_files|del=i'=>\$delete_in_between_files,'case|c=s'=>\$case)|| warn "Using default parameters:\nin=in.vcf\ndelete_empty_cols=1\nhallmark_file=hallmark_genes.tsv!\nlogfile=logfile.log\ndelete_in_between_files=1\n";
-chomp($infile,$hallmark_mapping_file,$sample,$delete_empty_cols,$delete_in_between_files,$logfile,$case);
+GetOptions('in|i=s'=>\$infile,'sample|s=s'=>\$sample,'hallmark_file|h=s'=>\$hallmark_mapping_file,'delete_empty_cols|d=i'=>\$delete_empty_cols,'logfile|log=s'=>\$logfile,'delete_in_between_files|del=i'=>\$delete_in_between_files,'case|c=s'=>\$case,'include|i_c=s'=>\$include)|| warn "Using default parameters:\nin=in.vcf\ndelete_empty_cols=1\nhallmark_file=hallmark_genes.tsv!\nlogfile=logfile.log\ndelete_in_between_files=1\n";
+chomp($infile,$hallmark_mapping_file,$sample,$delete_empty_cols,$delete_in_between_files,$logfile,$case,$include);
 
 open(ER,'>>',$logfile)||die "$!\n logfile not found. use --log path/to/your_logfile.log\n";
 
@@ -59,7 +61,7 @@ else{
 mkdir "run_$sample";
 print ER "created run dir run_$sample\n";
 
-my$prep_run=`perl prepare_bionano_output.pl --in $infile --vcf run_$sample/$sample.vcf --tsv run_$sample/$sample._raw_cols.tsv --c $case`;
+my$prep_run=`perl prepare_bionano_output.pl --in $infile --vcf run_$sample/$sample.vcf --tsv run_$sample/$sample._raw_cols.tsv --c $case --include $include`;
 print "prepared input: $prep_run\n";
 
 
